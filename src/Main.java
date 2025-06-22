@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static data.CommandData.valueOf;
 
 public class Main {
 
@@ -48,7 +47,7 @@ public class Main {
                         animalTypeNames.add(animalTypeData.name().toLowerCase());
                     }
 
-                   System.out.println(String.format("Введите тип животного. %s", String.join("/",animalTypeNames)));
+                   System.out.println(String.format("Введите тип животного: %s", String.join("/",animalTypeNames)));
 
                    AnimalTypeData animalTypeData = (AnimalTypeData) enumReturn.getEnumFromString(
                                 AnimalTypeData.class,
@@ -61,8 +60,8 @@ public class Main {
                     String name = input.next();
 
 
-                    int animalAge = getAnimalAgeWeight("Введите возраст животного", "Вы ввели неверное значение. Повторите ввод");
-                    int weightAnimal = getAnimalAgeWeight("Введите вес животного", "Вы ввели неверное значение. Повторите ввод");
+                    int animalAge = getAnimalAgeWeight("Введите возраст животного:", "Вы ввели неверное значение. Повторите ввод");
+                    int weightAnimal = getAnimalAgeWeight("Введите вес животного:", "Вы ввели неверное значение. Повторите ввод");
 
                     List<String> animalColor = new ArrayList<>();//хранение цвета
                     for(ColorData colorData: ColorData.values()) {
