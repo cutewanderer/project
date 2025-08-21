@@ -1,40 +1,36 @@
 package database;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class AnimalTable extends AbsTable implements ITable{
-  public AnimalTable(String tableName) {
+public class AnimalTable extends AbsTable{
+  private String tableName;
+
+  public AnimalTable(String tableName) throws SQLException, IOException {
     super(tableName);
+    this.tableName = tableName;
+    Map<String, String> columns = new HashMap<>();
     columns.put("id","bigint PRIMARY KEY AUTO_INCREMENT");
     columns.put("type", "varchar(15)");
     columns.put("name", "varchar(15)");
     columns.put("age", "int");
     columns.put("weight", "int");
     columns.put("color", "varchar(15)");
-    create();
+    createTable(columns);
   }
 
-  private void create() {
+
+  public String getTableName() {
+    return tableName;
   }
 
-  @Override
-  public void update() {
-
+  public void setTableName(String tableName) {
+    this.tableName = tableName;
   }
 
-  @Override
-  public ResultSet select() throws SQLException {
-    return super.select();
-  }
-
-  @Override
-  public void delete() {
-
-  }
-
-  @Override
-  public ResultSet selectFilterByType() throws SQLException {
-    return super.selectFilterByType();
-  }
 }

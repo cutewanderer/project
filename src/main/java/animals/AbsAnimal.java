@@ -12,11 +12,16 @@ public abstract class AbsAnimal {
 
     private ColorData color = null;
 
-    public AbsAnimal(String name, int age, int weight, ColorData colorData) {
+    private int id = -1;
+    private String type = "";
+
+    public AbsAnimal(String name, int age, int weight, ColorData colorData, int id,String type) {
         this.name = name;
         this.age = age;
         this.weight = weight;
         this.color = colorData;
+        this.id = id;
+        this.type = type;
     }
 
     public String getName() {
@@ -33,6 +38,18 @@ public abstract class AbsAnimal {
 
     public ColorData getColor() {
         return color;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void say(){

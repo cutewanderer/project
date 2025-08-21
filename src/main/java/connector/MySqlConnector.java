@@ -1,6 +1,5 @@
 package connector;
 
-import settings.ISettings;
 import settings.PropertiesSettings;
 
 import java.io.IOException;
@@ -9,28 +8,30 @@ import java.util.Map;
 
 public class MySqlConnector implements IDBConnector {
 
-  private  Map<String, String> dbSettings = null;
+  //private  Map<String, String> dbSettings = null;
   private static Connection connection = null;
   private static Statement statement = null;
 
-  private MySqlConnector() throws SQLException, IOException {
-    dbSettings = new PropertiesSettings().getSettings("db.properties");
-    getConnection();
-  }
+//  private MySqlConnector() throws SQLException, IOException {
+//    getConnection();
+//  }
 
-  private void getConnection() throws SQLException {
-    if (connection == null) {
-      connection = DriverManager.getConnection(
-              this.dbSettings.get("url"),
-              this.dbSettings.get("user"),
-              this.dbSettings.get("pass")
-      );
-    }
-    if (statement == null){
-      statement = connection.createStatement();
-    }
+  private void getConnection() throws IOException, SQLException {
+    PropertiesSettings dbSettings = new PropertiesSettings();
+    Map<String, String> dbData = dbSettings.getSettings("db.properties");
+      if (connection == null) {
+        connection = DriverManager.getConnection(
+                dbData.get("url"),
+                dbData.get("user"),
+                dbData.get("pass")
+        );
+      }
+      if (statement == null) {
+        statement = connection.createStatement();
+      }
+
   }
-  private void closeConnection() throws SQLException{
+  public void closeConnection() throws SQLException{
     if (statement!=null) {
       statement.close();
     }
@@ -39,10 +40,20 @@ public class MySqlConnector implements IDBConnector {
     }
   }
 
-  public void execute(String sqlRequest) throws SQLException {
-    statement.execute(sqlRequest);
+  public void execute(String sqlRequest) throws SQLException, IOException {
+      this.getConnection();
+      statement.execute(sqlRequest);
   }
-  public ResultSet executeQuery (String sqlRequest) throws SQLException {
+
+  public ResultSet executeQuery (String sqlRequest) throws SQLException, IOException {
+    this.getConnection();
     return statement.executeQuery(sqlRequest);
+  }
+  public PreparedStatement prepareStatement(String sql) throws SQLException {
+    initConnection();
+    return connection.prepareStatement(sql);
+  }
+
+  private void initConnection() {
   }
 }

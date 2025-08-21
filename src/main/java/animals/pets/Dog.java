@@ -4,8 +4,8 @@ import animals.AbsAnimal;
 import data.ColorData;
 
 public class Dog extends AbsAnimal {
-    public Dog(String name, int age, int weight, ColorData colorData) {
-        super(name, age, weight, colorData);
+    public Dog(String type,String name, int age, int weight, ColorData colorData, int id) {
+        super(name, age, weight, colorData, id, type);
     }
 
     public void say(){
